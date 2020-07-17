@@ -1,0 +1,14 @@
+jupyter contrib nbextension install --user
+jupyter nbextension enable --py widgetsnbextension
+jupyter nbextension enable python-markdown/main
+
+# Add the fileupload module.
+jupyter nbextension install --user --py fileupload
+jupyter nbextension enable  --user --py fileupload
+
+# Add qgrid
+jupyter nbextension enable --user --py qgrid
+
+# Add appmode
+jupyter nbextension     enable --user --py appmode
+jupyter serverextension enable --user --py appmode
