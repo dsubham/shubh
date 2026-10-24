@@ -538,6 +538,66 @@ img, svg { max-width: 100%; }
   .announcement .address-text { overflow-wrap: anywhere; }
 }
 
+
+
+/* Admissions banner above the hero learning-approach kicker */
+.admissions-banner{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  width:max-content;
+  max-width:100%;
+  margin:0 0 16px;
+  padding:7px 8px 7px 12px;
+  border:1px solid #f0d9ac;
+  border-radius:999px;
+  background:rgba(255,255,255,.94);
+  box-shadow:0 7px 20px rgba(26,37,99,.07);
+  color:var(--navy);
+}
+.admissions-copy{display:flex;align-items:center;gap:8px;min-width:0;}
+.admissions-label{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:7px 10px;border-radius:999px;
+  background:#fff0d4;color:#9c2924;
+  font-size:.7rem;font-weight:800;letter-spacing:.055em;
+  line-height:1.2;text-transform:uppercase;white-space:nowrap;
+}
+.admissions-label:before{content:"";width:6px;height:6px;border-radius:50%;background:var(--red);flex:0 0 6px;}
+.admissions-year{font-size:.83rem;font-weight:800;letter-spacing:.015em;white-space:nowrap;}
+.admissions-enrol{
+  display:inline-flex;align-items:center;justify-content:center;gap:7px;
+  padding:9px 12px;border-radius:999px;
+  background:var(--red);color:#fff!important;
+  font-size:.78rem;font-weight:800;line-height:1.1;white-space:nowrap;
+  transition:background .2s ease,transform .2s ease;
+}
+.admissions-enrol:hover{background:#bf1818;transform:translateY(-1px);}
+.admissions-enrol svg{flex:0 0 auto;}
+@media(max-width:760px){
+  .admissions-banner{gap:8px;margin-bottom:14px;padding:6px 7px 6px 9px;}
+  .admissions-copy{gap:6px;}
+  .admissions-label{font-size:.62rem;padding:7px 8px;letter-spacing:.035em;}
+  .admissions-year{font-size:.75rem;}
+  .admissions-enrol{font-size:.72rem;padding:9px 10px;gap:5px;}
+}
+@media(max-width:360px){
+  .admissions-banner{gap:6px;padding:6px;}
+  .admissions-label{font-size:.58rem;padding:6px 7px;}
+  .admissions-year{font-size:.7rem;}
+  .admissions-enrol{font-size:.68rem;padding:8px 8px;}
+  .admissions-enrol svg{width:13px;height:13px;}
+}
+/* Small hero spacing refinement: remove extra vertical air above the banner. */
+.hero { padding-top: 42px; }
+.hero-copy { padding-top: 12px; padding-bottom: 12px; }
+.admissions-banner { margin-bottom: 12px; }
+@media (max-width: 760px) {
+  .hero { padding-top: 28px; }
+  .hero-copy { padding-top: 0; padding-bottom: 0; }
+  .admissions-banner { margin-bottom: 10px; }
+}
 </style>
 </head>
 <body>
@@ -555,6 +615,14 @@ img, svg { max-width: 100%; }
 <section class="hero" id="home">
 <div class="wrap hero-grid">
 <div class="hero-copy">
+<div class="admissions-banner" role="group" aria-label="Admissions open">
+  <span class="admissions-copy">
+    <span class="admissions-label">Admissions Open</span>
+  </span>
+  <a class="admissions-enrol" href="#visit" onclick="return window.openVisitModal(event);">Enrol Now
+    <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13M12 5l7 7-7 7"/></svg>
+  </a>
+</div>
 <div class="hero-kicker"><span class="spark">✦</span> Montessori-inspired · IB-integrated early years</div>
 <h1>Little steps.<br/>Big <em>possibilities.</em></h1>
 <p>A warm, thoughtfully designed beginning where children learn by doing, asking, moving, making and discovering the world around them.</p>
@@ -585,7 +653,7 @@ img, svg { max-width: 100%; }
 </section>
 <section class="section" id="about"><div class="wrap intro-grid">
 <div class="intro-images reveal"><img alt="Children exploring nature together" src="assets/images/our-story.jpg"/><img alt="Child enjoying a playful learning moment at KEYS" class="intro-mini" src="assets/images/our-story2.jpg"/><div class="stamp">A PLACE TO<br/>GROW &amp; GLOW ✦</div></div>
-<div class="intro-copy reveal"><span class="eyebrow">Welcome to KEYS Gunjur</span><h2>A thoughtful beginning makes all the difference.</h2><p>The early years are full of firsts: the first question, the first friendship, the first “I did it myself!”. At KEYS, we want those moments to feel joyful, meaningful and full of possibility.</p><p>Our learning experiences invite children to observe, experiment, communicate and build confidence—without rushing childhood.</p><div class="check-list"><div class="check"><i>✓</i><span>Play with purpose</span></div><div class="check"><i>✓</i><span>Stories &amp; expression</span></div><div class="check"><i>✓</i><span>Hands-on discovery</span></div><div class="check"><i>✓</i><span>Carefully guided routines</span></div></div><a class="btn btn-red" href="#approach">Discover our approach ↗</a></div>
+<div class="intro-copy reveal"><span class="eyebrow">Welcome to KEYS Gunjur</span><h2>A thoughtful beginning makes all the difference.</h2><p>The early years are full of firsts: the first question, the first friendship, the first “I did it myself!”. At KEYS, we want those moments to feel joyful, meaningful and full of possibility.</p><p>Our learning experiences invite children to observe, experiment, communicate and build confidence—without rushing childhood.</p><div class="check-list"><div class="check"><i>✓</i><span>Play with purpose</span></div><div class="check"><i>✓</i><span>Stories &amp; expression</span></div><div class="check"><i>✓</i><span>Hands-on discovery</span></div><div class="check"><i>✓</i><span>Carefully guided routines</span></div></div><a class="btn btn-red" href="#approach">Discover our approach <svg class="nav-visit-icon" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a></div>
 </div></section>
 <section class="section usps" id="experiences"><div class="wrap">
 <div class="section-head reveal"><span class="eyebrow">The KEYS difference</span><h2>Little experiences.<br/>Lasting foundations.</h2><p>Tap a card to discover how everyday moments can open up a world of learning. These images are illustrative placeholders and can be replaced with campus photos.</p></div>
