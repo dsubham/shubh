@@ -1040,13 +1040,13 @@ img, svg { max-width: 100%; }
 
 
 
-/* Mobile carousel height: let the visible slide determine the hero height.
-   This removes the large blank area below the Focus one-liner. */
+/* Mobile carousel: use a consistent height across slides to prevent the page
+   content below the hero from jumping up and down during transitions. */
 @media (max-width: 760px) {
   .hero-carousel-viewport {
-    height: auto;
     overflow: hidden;
-    transition: height .4s ease;
+    /* Height is set once to the tallest slide by the carousel script. */
+    transition: none;
   }
   .hero-carousel-track {
     align-items: flex-start;
@@ -1057,6 +1057,29 @@ img, svg { max-width: 100%; }
   }
 }
 
+
+/* Mobile-only program line on the second hero slide. It adds useful content below
+   the focus statement without changing the desktop layout or carousel timing. */
+.focus-mobile-programs { display: none; }
+@media (max-width: 760px) {
+  .focus-mobile-programs {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    max-width: 100%;
+    margin: 12px auto 4px;
+    padding: 10px 15px;
+    border: 1px solid #eadbbd;
+    border-radius: 999px;
+    background: #fff9ed;
+    color: var(--navy);
+    text-align: center;
+    font-size: .78rem;
+    line-height: 1.35;
+  }
+  .focus-mobile-programs strong { font-weight: 800; }
+}
 </style>
 </head>
 <body>
@@ -1154,6 +1177,9 @@ img, svg { max-width: 100%; }
     <div class="focus-one-liner">
       <span class="focus-one-liner-mark" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21v-9"/><path d="M12 14C6 14 3 10 3 5c5 0 9 3 9 9Z"/><path d="M12 17c0-5 3-8 9-8 0 5-3 8-9 8Z"/></svg></span>
       <p>Our focus is on psychological development, practical life skills, focused attention, individual care and a safe, secure environment for every child.</p>
+    </div>
+    <div class="focus-mobile-programs" aria-label="Programs offered at KEYS">
+      <strong>Day Care · Nursery · LKG · UKG</strong>
     </div>
   </div>
 </div><!-- end Our Focus & Aim slide -->
@@ -1313,19 +1339,17 @@ document.getElementById('enquiryForm').addEventListener('submit',e=>{e.preventDe
   let rotationTimer = null;
   let userSelectedSlide = false;
 
-  function updateMobileViewportHeight(animate = true) {
+  function updateMobileViewportHeight() {
     if (!window.matchMedia('(max-width: 760px)').matches) {
       viewport.style.height = '';
-      viewport.style.transition = '';
       return;
     }
-    if (!animate) viewport.style.transition = 'none';
-    // The slides retain natural heights on mobile; fit the viewport to the selected one.
-    const activeHeight = slides[activeSlide].scrollHeight;
-    viewport.style.height = `${activeHeight}px`;
-    if (!animate) {
-      requestAnimationFrame(() => requestAnimationFrame(() => { viewport.style.transition = ''; }));
-    }
+
+    /* Reserve enough room for the tallest slide, rather than resizing to the
+       active slide. This keeps the proof strip/KPI section stationary while
+       the horizontal carousel moves. */
+    const tallestSlide = Math.max(...slides.map((slide) => slide.scrollHeight));
+    if (tallestSlide > 0) viewport.style.height = `${tallestSlide}px`;
   }
 
   function moveTo(index, animate = true) {
@@ -1344,7 +1368,7 @@ document.getElementById('enquiryForm').addEventListener('submit',e=>{e.preventDe
       dot.classList.toggle('is-active', isActive);
       dot.setAttribute('aria-pressed', isActive ? 'true' : 'false');
     });
-    updateMobileViewportHeight(animate);
+    updateMobileViewportHeight();
     if (!animate) {
       requestAnimationFrame(() => requestAnimationFrame(() => { track.style.transition = ''; }));
     }
@@ -1367,9 +1391,12 @@ document.getElementById('enquiryForm').addEventListener('submit',e=>{e.preventDe
     });
   });
 
-  // Recalculate pixel positioning and active-slide height on resize/load without a jump.
-  window.addEventListener('resize', () => moveTo(activeSlide, false));
-  window.addEventListener('load', () => updateMobileViewportHeight(false), { once: true });
+  // Recalculate the slide position and maximum reserved height on viewport changes.
+  window.addEventListener('resize', () => {
+    updateMobileViewportHeight();
+    moveTo(activeSlide, false);
+  });
+  window.addEventListener('load', updateMobileViewportHeight, { once: true });
 
   moveTo(0, false);
   firstAdvanceTimer = window.setTimeout(() => {
