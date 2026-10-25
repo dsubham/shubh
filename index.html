@@ -1163,6 +1163,25 @@ img, svg { max-width: 100%; }
   .school-van-badge-mobile .school-van-copy small { font-size: .72rem; }
 }
 
+
+
+/* Keep the decorative quarter-circle arcs as a watermark behind hero content.
+   Opacity and the existing circle dimensions/placement are intentionally unchanged. */
+.hero:before,
+.hero:after {
+  z-index: 0;
+  pointer-events: none;
+}
+.hero-carousel-viewport {
+  position: relative;
+  z-index: 1;
+}
+.hero-carousel-dots,
+.hero > .scroll-cue {
+  position: relative;
+  z-index: 2;
+}
+
 </style>
 </head>
 <body>
