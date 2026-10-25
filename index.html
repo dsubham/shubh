@@ -771,6 +771,273 @@ img, svg { max-width: 100%; }
   }
 }
 
+
+
+/* Hero carousel: full-width panels, smooth directional movement, and accessible dot navigation. */
+.hero-carousel-viewport {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+.hero-carousel-track {
+  display: flex;
+  align-items: stretch;
+  width: 200%;
+  transform: translate3d(0, 0, 0);
+  transition: transform .9s cubic-bezier(.22,.61,.36,1);
+  will-change: transform;
+}
+.hero-slide {
+  flex: 0 0 50%;
+  width: 50%;
+  min-width: 0;
+  position: relative;
+}
+.hero-slide .hero-grid { height: 100%; }
+.hero-slide-life-skills .hero-kicker .spark { color: #5c9b55; }
+.hero-slide-life-skills .hero-photo img { object-position: center; }
+.hero-slide-life-skills .float-top .float-icon { background: #e6f4df; }
+.hero-slide-life-skills .float-bottom .float-icon { background: #fff0d4; }
+.hero-carousel-dots {
+  position: relative;
+  z-index: 12;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 9px;
+  margin: 12px auto -18px;
+  padding: 5px 12px;
+  width: fit-content;
+  border-radius: 999px;
+  background: rgba(255,255,255,.78);
+  backdrop-filter: blur(8px);
+}
+.hero-carousel-dot {
+  appearance: none;
+  border: 0;
+  cursor: pointer;
+  display: block;
+  width: 9px;
+  height: 9px;
+  padding: 0;
+  border-radius: 999px;
+  background: #cbd0dc;
+  box-shadow: 0 0 0 1px rgba(26,37,99,.08);
+  transition: width .22s ease, background-color .22s ease, transform .22s ease;
+}
+.hero-carousel-dot:hover { transform: scale(1.12); background: #8992aa; }
+.hero-carousel-dot.is-active { width: 25px; background: var(--red); }
+.hero-carousel-dot:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
+@media (max-width: 760px) {
+  .hero-carousel-dots { margin-top: 8px; margin-bottom: -14px; }
+  .hero-carousel-dot { width: 8px; height: 8px; }
+  .hero-carousel-dot.is-active { width: 22px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-carousel-track, .hero-carousel-dot { transition: none; }
+}
+
+
+/* Our Focus & Aim slide: four labelled photo circles around the KEYS logo. */
+.hero-slide-focus .focus-slide-content {
+  padding-top: 12px;
+  padding-bottom: 0;
+}
+.hero-slide-focus .focus-grid {
+  grid-template-columns: minmax(0, .92fr) minmax(0, 1.08fr);
+  gap: clamp(20px, 3vw, 42px);
+  align-items: center;
+  height: auto;
+}
+.hero-slide-focus .focus-copy { min-width: 0; }
+.hero-slide-focus .focus-copy h1 { max-width: 560px; }
+.hero-slide-focus .focus-copy > p { max-width: 470px; }
+.hero-slide-focus .focus-note { margin-top: 22px; }
+.focus-orbit-wrap {
+  min-width: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 0 18px;
+  overflow: visible;
+}
+.focus-orbit {
+  position: relative;
+  isolation: isolate;
+  width: min(100%, 500px);
+  aspect-ratio: 1 / 1;
+  margin: 0 auto;
+}
+/* Soft centre disc and gold ring, with a dashed larger orbit outside it. */
+.focus-orbit::before {
+  content: "";
+  position: absolute;
+  inset: 12%;
+  border: 5px solid #f4cf70;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 45%, #fffdf7 0%, #fff7e4 72%, #f8efd9 100%);
+  z-index: -2;
+}
+.focus-orbit-ring {
+  position: absolute;
+  inset: 3.5%;
+  border: 2px dashed #d9cda9;
+  border-radius: 50%;
+  z-index: -1;
+}
+.focus-center-logo-shell {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: grid;
+  place-items: center;
+  width: 34%;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  background: #fff;
+  border: 6px solid #fff;
+  outline: 5px solid #f1d6a1;
+  box-shadow: 0 12px 34px rgba(26,37,99,.16), 0 0 0 10px rgba(255,255,255,.62);
+  z-index: 5;
+}
+.focus-center-logo {
+  display: block;
+  width: 90%;
+  height: 90%;
+  max-width: none;
+  object-fit: contain;
+  object-position: center;
+}
+.focus-orbit-item {
+  position: absolute;
+  display: block;
+  width: 28%;
+  aspect-ratio: 1 / 1;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  overflow: visible;
+  background: transparent;
+  box-shadow: none;
+  z-index: 3;
+}
+.focus-orbit-item img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  border: 5px solid #fff;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center;
+  background: #fff;
+  box-shadow: 0 10px 26px rgba(26,37,99,.17), 0 0 0 1px rgba(26,37,99,.06);
+}
+.focus-orbit-item figcaption {
+  position: absolute;
+  left: 50%;
+  bottom: -13px;
+  transform: translateX(-50%);
+  width: max-content;
+  max-width: 190px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: #fff;
+  color: var(--navy);
+  box-shadow: 0 10px 26px rgba(26,37,99,.14);
+  font-family: "DM Sans", sans-serif;
+  font-size: .77rem;
+  font-weight: 800;
+  line-height: 1.25;
+  text-align: center;
+  white-space: normal;
+  z-index: 4;
+}
+.focus-orbit-psych { left: 5.5%; top: 7%; }
+.focus-orbit-plant { right: 5.5%; top: 7%; }
+.focus-orbit-safety { left: 5.5%; bottom: 7%; }
+.focus-orbit-care { right: 5.5%; bottom: 7%; }
+.focus-one-liner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  max-width: 1030px;
+  margin: 10px auto 0;
+  padding: 15px 22px;
+  border-top: 1px solid rgba(26,37,99,.11);
+  color: var(--navy);
+  text-align: center;
+}
+.focus-one-liner-mark { flex: 0 0 auto; display: grid; place-items: center; color: #6d9f58; }
+.focus-one-liner p { margin: 0; color: #4f5b73; font-size: .91rem; line-height: 1.55; font-weight: 600; }
+@media (max-width: 1000px) {
+  .hero-slide-focus .focus-grid { gap: 18px; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); }
+  .focus-orbit { width: min(100%, 430px); }
+  .focus-orbit-item img { border-width: 4px; }
+  .focus-center-logo-shell { border-width: 4px; outline-width: 4px; }
+  .focus-orbit-item figcaption { max-width: 160px; padding: 7px 11px; font-size: .7rem; }
+}
+@media (max-width: 760px) {
+  .hero-slide-focus .focus-slide-content { padding-top: 0; }
+  .hero-slide-focus .focus-grid { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  .hero-slide-focus .focus-copy { padding: 0; }
+  .hero-slide-focus .focus-copy h1 { font-size: clamp(2.45rem, 10vw, 3.45rem); }
+  .hero-slide-focus .focus-copy > p { max-width: none; margin-top: 18px; }
+  .hero-slide-focus .focus-note { margin-top: 17px; }
+  .focus-orbit-wrap { padding: 0 0 22px; }
+  .focus-orbit { width: min(100%, 390px); }
+  .focus-orbit-item { width: 28%; }
+  .focus-orbit-item img { border-width: 4px; }
+  .focus-orbit-item figcaption { max-width: 145px; bottom: -12px; padding: 7px 10px; font-size: .66rem; }
+  .focus-one-liner { margin-top: 6px; padding: 13px 3px 5px; gap: 8px; align-items: flex-start; }
+  .focus-one-liner p { font-size: .8rem; text-align: left; }
+  .focus-one-liner-mark svg { width: 18px; height: 18px; }
+}
+@media (max-width: 420px) {
+  .focus-orbit { width: min(100%, 320px); }
+  .focus-orbit-item { width: 28%; }
+  .focus-orbit-item img { border-width: 3px; }
+  .focus-center-logo-shell { width: 32%; border-width: 3px; outline-width: 3px; box-shadow: 0 8px 20px rgba(26,37,99,.14), 0 0 0 6px rgba(255,255,255,.65); }
+  .focus-orbit-item figcaption { max-width: 125px; padding: 6px 8px; font-size: .61rem; }
+  .focus-one-liner p { font-size: .76rem; }
+}
+
+
+
+/* Five-photo orbit for Our Focus & Aim. The fifth photo uses an existing campus image. */
+.focus-orbit-item { width: 24%; }
+.focus-orbit-psych { left: 38%; top: 1%; right: auto; bottom: auto; }
+.focus-orbit-plant { right: 1%; top: 23%; left: auto; bottom: auto; }
+.focus-orbit-safety { right: 9%; bottom: 1%; left: auto; top: auto; }
+.focus-orbit-care { left: 9%; bottom: 1%; right: auto; top: auto; }
+.focus-orbit-discovery { left: 1%; top: 23%; right: auto; bottom: auto; }
+.focus-orbit-item figcaption { max-width: 150px; padding: 8px 11px; font-size: .68rem; }
+.focus-orbit-discovery figcaption { left: 0; transform: none; }
+.focus-orbit-plant figcaption { left: auto; right: 0; transform: none; }
+@media (max-width: 1000px) {
+  .focus-orbit-item { width: 25%; }
+  .focus-orbit-item figcaption { max-width: 140px; padding: 7px 9px; font-size: .65rem; }
+}
+@media (max-width: 760px) {
+  .focus-orbit-item { width: 24%; }
+  .focus-orbit-discovery { left: 1%; top: 23%; }
+  .focus-orbit-plant { right: 1%; top: 23%; }
+  .focus-orbit-care { left: 9%; bottom: 1%; }
+  .focus-orbit-safety { right: 9%; bottom: 1%; }
+  .focus-orbit-psych { left: 38%; top: 1%; }
+  .focus-orbit-item figcaption { max-width: 112px; padding: 6px 7px; font-size: .6rem; }
+  .focus-orbit-discovery figcaption { left: 0; right: auto; transform: none; }
+  .focus-orbit-plant figcaption { left: auto; right: 0; transform: none; }
+}
+@media (max-width: 420px) {
+  .focus-orbit-item { width: 24%; }
+  .focus-orbit-item figcaption { max-width: 100px; padding: 5px 6px; font-size: .57rem; }
+}
+
 </style>
 </head>
 <body>
@@ -786,6 +1053,9 @@ img, svg { max-width: 100%; }
 </header>
 <main>
 <section class="hero" id="home">
+<div class="hero-carousel-viewport" aria-label="KEYS Gunjur highlights">
+<div class="hero-carousel-track" id="heroCarouselTrack">
+<div class="hero-slide hero-slide-primary" aria-hidden="false">
 <div class="wrap hero-grid">
 <div class="hero-copy">
 <div class="admissions-banner" role="group" aria-label="Admissions open">
@@ -808,7 +1078,73 @@ img, svg { max-width: 100%; }
 <div class="floating-card float-bottom"><span class="float-icon">🌿</span><span><strong>Growing at their own pace</strong><small>Little learners, big confidence</small></span></div>
 <div class="floating-card float-programs" aria-label="Programs at KEYS: Day Care, Nursery, LKG and UKG"><span class="float-icon programs-icon" aria-hidden="true">🎒</span><span><strong>Day Care · Nursery</strong><small>LKG · UKG</small></span></div>
 </div>
-</div><span class="scroll-cue">Scroll to discover <svg class="icon icon-down" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v15"/><path d="m6 13 6 6 6-6"/></svg></span>
+</div>
+</div><!-- end first hero slide -->
+<div class="hero-slide hero-slide-focus" aria-hidden="true">
+  <div class="wrap focus-slide-content">
+    <div class="hero-grid focus-grid">
+      <div class="hero-copy focus-copy">
+        <div class="admissions-banner" role="group" aria-label="Admissions open">
+          <span class="admissions-copy"><span class="admissions-label">Admissions Open</span></span>
+          <a class="admissions-enrol" href="#visit" onclick="return window.openVisitModal(event);">Enrol Now
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+        <div class="hero-kicker"><span class="spark">✦</span> What guides every day</div>
+        <h1>Our Focus<br/><em>&amp; Attention.</em></h1>
+        <p>We nurture the whole child through meaningful experiences, growing independence and attentive, caring relationships.</p>
+        <div class="hero-ctas">
+          <a class="btn btn-red js-open-visit" href="#visit" onclick="return window.openVisitModal(event);">Come experience KEYS</a>
+          <a class="btn btn-navy" href="#experiences">Explore our world <svg class="icon icon-down" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v15"/><path d="m6 13 6 6 6-6"/></svg></a>
+        </div>
+        <div class="hero-note focus-note">
+          <div class="avatars"><span>🧠</span><span>🌱</span><span>💛</span></div>
+          <span><strong>Every child seen. Every small step valued.</strong><br/>Care that supports confident growth</span>
+        </div>
+      </div>
+
+      <div class="focus-orbit-wrap" aria-label="KEYS focus areas">
+        <div class="focus-orbit">
+          <div class="focus-orbit-ring" aria-hidden="true"></div>
+          <figure class="focus-orbit-item focus-orbit-psych" title="Psychological development">
+            <img src="assets/images/hands-on.jpg" alt="Child developing curiosity and thinking through hands-on drawing" loading="lazy" decoding="async"/>
+            <figcaption>Psychological development</figcaption>
+          </figure>
+          <figure class="focus-orbit-item focus-orbit-plant" title="Practical life skills">
+            <img src="assets/images/garden.jpg" alt="Caring for plants and learning practical life skills" loading="lazy" decoding="async"/>
+            <figcaption>Practical life skills</figcaption>
+          </figure>
+          <figure class="focus-orbit-item focus-orbit-safety" title="Security">
+            <img src="assets/images/cctv.jpg" alt="Illustrative view of monitored preschool spaces" loading="lazy" decoding="async"/>
+            <figcaption>Security</figcaption>
+          </figure>
+          <figure class="focus-orbit-item focus-orbit-care" title="Focused attention and care">
+            <img src="assets/images/lsrw.jpg" alt="Children learning and interacting in a caring preschool environment" loading="lazy" decoding="async"/>
+            <figcaption>Focused attention &amp; care</figcaption>
+          </figure>
+          <figure class="focus-orbit-item focus-orbit-discovery" title="Everyday discovery">
+            <img src="assets/images/our-story2.jpg" alt="A glimpse of everyday discovery at KEYS Gunjur" loading="lazy" decoding="async"/>
+            <figcaption>Everyday discovery</figcaption>
+          </figure>
+          <div class="focus-center-logo-shell" aria-label="KEYS logo">
+            <img id="focusCenterLogo" class="focus-center-logo" alt="KEYS – Kognitics Early Years"/>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="focus-one-liner">
+      <span class="focus-one-liner-mark" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21v-9"/><path d="M12 14C6 14 3 10 3 5c5 0 9 3 9 9Z"/><path d="M12 17c0-5 3-8 9-8 0 5-3 8-9 8Z"/></svg></span>
+      <p>Our focus is on psychological development, practical life skills, focused attention, individual care and a safe, secure environment for every child.</p>
+    </div>
+  </div>
+</div><!-- end Our Focus & Aim slide -->
+</div><!-- end hero carousel track -->
+</div><!-- end hero carousel viewport -->
+<div class="hero-carousel-dots" id="heroCarouselDots" role="group" aria-label="Choose a hero slide">
+  <button class="hero-carousel-dot is-active" type="button" aria-label="Show the KEYS introduction slide" aria-pressed="true" data-slide="0"></button>
+  <button class="hero-carousel-dot" type="button" aria-label="Show the Our Focus and Aim slide" aria-pressed="false" data-slide="1"></button>
+</div>
+<span class="scroll-cue">Scroll to discover <svg class="icon icon-down" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v15"/><path d="m6 13 6 6 6-6"/></svg></span>
 </section>
 <div class="proof-strip"><div class="wrap proof-grid">
 <div class="proof-item"><span class="proof-icon">🧸</span><span><strong>Purposeful play</strong><small>Explore through touch</small></span></div>
@@ -830,7 +1166,7 @@ img, svg { max-width: 100%; }
 <div class="intro-copy reveal"><span class="eyebrow">Welcome to KEYS Gunjur</span><h2>A thoughtful beginning makes all the difference.</h2><p>The early years are full of firsts: the first question, the first friendship, the first “I did it myself!”. At KEYS, we want those moments to feel joyful, meaningful and full of possibility.</p><p>Our learning experiences invite children to observe, experiment, communicate and build confidence—without rushing childhood.</p><div class="check-list"><div class="check"><i>✓</i><span>Play with purpose</span></div><div class="check"><i>✓</i><span>Stories &amp; expression</span></div><div class="check"><i>✓</i><span>Hands-on discovery</span></div><div class="check"><i>✓</i><span>Carefully guided routines</span></div></div><a class="btn btn-red" href="#approach">Discover our approach <svg class="nav-visit-icon" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a></div>
 </div></section>
 <section class="section usps" id="experiences"><div class="wrap">
-<div class="section-head reveal"><span class="eyebrow">Our USPs</span><h2>Little experiences.<br/>Lasting foundations.</h2><p>Discover what makes KEYS Gunjur special: hands-on discovery, Aqua Time, language-rich learning and a safe, nurturing environment.</p></div>
+<div class="section-head reveal"><span class="eyebrow">The KEYS Difference</span><h2>Little experiences.<br/>Lasting foundations.</h2><p>Discover what makes KEYS Gunjur special: hands-on discovery, Aqua Time, language-rich learning and a safe, nurturing environment.</p></div>
 <div class="usp-grid">
 <button class="usp-card reveal" data-description="From sorting and matching to building and arranging, hands-on materials invite children to explore patterns, practise coordination and learn through their own discoveries." data-icon="🧸" data-image="assets/images/hands-on.jpg" data-title="Montessori-inspired materials"><div class="usp-image"><img alt="Colourful hands-on learning materials" src="assets/images/hands-on.jpg"/><span class="usp-no">01</span></div><div class="usp-body"><span class="icon">🧸</span><h3>Hands-on discovery</h3><p>Thoughtful materials that invite little hands to explore and understand.</p><span class="learn-more">EXPLORE THIS <svg class="learn-more-arrow" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></span></div></button>
 <button class="usp-card reveal" data-description="Water play and movement-based experiences can nurture sensory exploration, body awareness and confidence. Any aqua activity should be described to parents with the school's actual format, supervision and safety arrangements." data-icon="💧" data-image="assets/images/aqua.jpg" data-title="Aqua time &amp; movement"><div class="usp-image"><img alt="Children's swimming and water play setting" src="assets/images/aqua.jpg"/><span class="usp-no">02</span></div><div class="usp-body"><span class="icon">💧</span><h3>Aqua time &amp; movement</h3><p>Active experiences that bring energy, coordination and discovery into the day.</p><span class="learn-more">EXPLORE THIS <svg class="learn-more-arrow" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></span></div></button>
@@ -939,6 +1275,73 @@ document.getElementById('year').textContent=new Date().getFullYear();
 const revealObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('show');revealObserver.unobserve(entry.target)}}),{threshold:.12});
 document.querySelectorAll('.reveal').forEach(el=>revealObserver.observe(el));
 document.getElementById('enquiryForm').addEventListener('submit',e=>{e.preventDefault();const f=new FormData(e.currentTarget);const lines=['Hello KEYS Gunjur, I would like to enquire about a school visit.','Parent/Guardian: '+f.get('parentName'),'Phone: '+f.get('phone'),'Child age group: '+(f.get('childAge')||'Not specified'),'Preferred visit: '+(f.get('visitTime')||'Not specified'),'Question: '+(f.get('message')||'None')];const text=encodeURIComponent(lines.join('\n'));window.open('https://wa.me/918210496332?text='+text,'_blank','noopener');});
+
+
+// Hero carousel: start on the original slide, move left after 5 seconds,
+// move back to the right on return, and let visitors choose either slide with dots.
+(function initHeroCarousel() {
+  const viewport = document.querySelector('.hero-carousel-viewport');
+  const track = document.getElementById('heroCarouselTrack');
+  const slides = Array.from(document.querySelectorAll('.hero-slide'));
+  const dots = Array.from(document.querySelectorAll('.hero-carousel-dot'));
+  const focusCenterLogo = document.getElementById('focusCenterLogo');
+  const headerLogo = document.querySelector('.brand-logo');
+  if (focusCenterLogo && headerLogo) focusCenterLogo.src = headerLogo.currentSrc || headerLogo.src;
+  if (!viewport || !track || slides.length < 2 || dots.length < 2) return;
+
+  let activeSlide = 0;
+  let firstAdvanceTimer = null;
+  let rotationTimer = null;
+  let userSelectedSlide = false;
+
+  function moveTo(index, animate = true) {
+    activeSlide = Math.max(0, Math.min(index, slides.length - 1));
+    const slideWidth = viewport.getBoundingClientRect().width;
+    if (!animate) track.style.transition = 'none';
+    // Use the actual viewport width (rather than a percentage of the track) to avoid drift.
+    track.style.transform = `translate3d(${-activeSlide * slideWidth}px, 0, 0)`;
+    slides.forEach((slide, i) => {
+      const isActive = i === activeSlide;
+      slide.setAttribute('aria-hidden', isActive ? 'false' : 'true');
+      slide.inert = !isActive;
+    });
+    dots.forEach((dot, i) => {
+      const isActive = i === activeSlide;
+      dot.classList.toggle('is-active', isActive);
+      dot.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+    });
+    if (!animate) {
+      requestAnimationFrame(() => requestAnimationFrame(() => { track.style.transition = ''; }));
+    }
+  }
+
+  function scheduleNext(delay = 5000) {
+    window.clearTimeout(rotationTimer);
+    rotationTimer = window.setTimeout(() => {
+      moveTo(activeSlide === 0 ? 1 : 0, true);
+      scheduleNext(5000);
+    }, delay);
+  }
+
+  dots.forEach((dot) => {
+    dot.addEventListener('click', () => {
+      userSelectedSlide = true;
+      window.clearTimeout(firstAdvanceTimer);
+      moveTo(Number(dot.dataset.slide), true);
+      scheduleNext(5000);
+    });
+  });
+
+  // Recalculate pixel positioning on resize without showing an unwanted animated jump.
+  window.addEventListener('resize', () => moveTo(activeSlide, false));
+
+  moveTo(0, false);
+  firstAdvanceTimer = window.setTimeout(() => {
+    if (!userSelectedSlide) moveTo(1, true);
+    scheduleNext(5000);
+  }, 5000);
+})();
+
 </script>
 </body>
 </html>
