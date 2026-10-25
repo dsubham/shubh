@@ -1038,6 +1038,25 @@ img, svg { max-width: 100%; }
   .focus-orbit-item figcaption { max-width: 100px; padding: 5px 6px; font-size: .57rem; }
 }
 
+
+
+/* Mobile carousel height: let the visible slide determine the hero height.
+   This removes the large blank area below the Focus one-liner. */
+@media (max-width: 760px) {
+  .hero-carousel-viewport {
+    height: auto;
+    overflow: hidden;
+    transition: height .4s ease;
+  }
+  .hero-carousel-track {
+    align-items: flex-start;
+  }
+  .hero-slide {
+    align-self: flex-start;
+    height: auto;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -1294,6 +1313,21 @@ document.getElementById('enquiryForm').addEventListener('submit',e=>{e.preventDe
   let rotationTimer = null;
   let userSelectedSlide = false;
 
+  function updateMobileViewportHeight(animate = true) {
+    if (!window.matchMedia('(max-width: 760px)').matches) {
+      viewport.style.height = '';
+      viewport.style.transition = '';
+      return;
+    }
+    if (!animate) viewport.style.transition = 'none';
+    // The slides retain natural heights on mobile; fit the viewport to the selected one.
+    const activeHeight = slides[activeSlide].scrollHeight;
+    viewport.style.height = `${activeHeight}px`;
+    if (!animate) {
+      requestAnimationFrame(() => requestAnimationFrame(() => { viewport.style.transition = ''; }));
+    }
+  }
+
   function moveTo(index, animate = true) {
     activeSlide = Math.max(0, Math.min(index, slides.length - 1));
     const slideWidth = viewport.getBoundingClientRect().width;
@@ -1310,6 +1344,7 @@ document.getElementById('enquiryForm').addEventListener('submit',e=>{e.preventDe
       dot.classList.toggle('is-active', isActive);
       dot.setAttribute('aria-pressed', isActive ? 'true' : 'false');
     });
+    updateMobileViewportHeight(animate);
     if (!animate) {
       requestAnimationFrame(() => requestAnimationFrame(() => { track.style.transition = ''; }));
     }
@@ -1332,8 +1367,9 @@ document.getElementById('enquiryForm').addEventListener('submit',e=>{e.preventDe
     });
   });
 
-  // Recalculate pixel positioning on resize without showing an unwanted animated jump.
+  // Recalculate pixel positioning and active-slide height on resize/load without a jump.
   window.addEventListener('resize', () => moveTo(activeSlide, false));
+  window.addEventListener('load', () => updateMobileViewportHeight(false), { once: true });
 
   moveTo(0, false);
   firstAdvanceTimer = window.setTimeout(() => {
