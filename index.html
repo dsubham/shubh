@@ -2795,6 +2795,18 @@ contactEnquiryForm.addEventListener('submit', async e => {
       const value = content[el.getAttribute('data-sb-config-text')];
       if (typeof value === 'string' && value.trim()) el.textContent = value.trim();
     });
+    // Keep every email link in sync with config.email. This avoids stale mailto links
+    // if config.email_href was not updated separately in the database.
+    const configuredEmail = typeof content['config.email'] === 'string' ? content['config.email'].trim() : '';
+    if (configuredEmail) {
+      document.querySelectorAll('[data-sb-config-text="config.email"]').forEach(el => {
+        if (el.matches('a')) el.setAttribute('href', 'mailto:' + configuredEmail);
+        else {
+          const link = el.closest('a');
+          if (link) link.setAttribute('href', 'mailto:' + configuredEmail);
+        }
+      });
+    }
     window.KEYS_WEBSITE_CONTENT = content;
     document.documentElement.dataset.contentLoaded = 'true';
   } catch (error) {
