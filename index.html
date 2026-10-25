@@ -1176,9 +1176,12 @@ img, svg { max-width: 100%; }
   position: relative;
   z-index: 1;
 }
-.hero-carousel-dots,
-.hero > .scroll-cue {
+.hero-carousel-dots {
   position: relative;
+  z-index: 2;
+}
+/* Preserve the scroll cue's original absolute positioning so it adds no hero height. */
+.hero > .scroll-cue {
   z-index: 2;
 }
 
